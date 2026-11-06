@@ -1,6 +1,6 @@
 import { useEffect, useState, type RefObject } from "react";
 import { Pause, Play, SkipBack, SkipForward } from "lucide-react";
-import type { SubtitleSegment, VideoProject } from "@vietdub/shared";
+import type { SubtitleSegment, VideoProject } from "@vietvoice/shared";
 import { formatTime } from "../../utils/format-time";
 import { generatePreviewProxy, generateVideoPoster, hasPreviewProxy } from "../../services/api";
 

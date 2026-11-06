@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import type { OcrRegion } from "@vietdub/shared";
+import type { OcrRegion } from "@vietvoice/shared";
 
 interface SubtitleRegionSelectorProps {
   imageUrl: string;

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import type { SubtitleSegment } from "@vietdub/shared";
+import type { SubtitleSegment } from "@vietvoice/shared";
 import { tinhDoanSauKhiKeo, type CheDoKeoTimeline } from "../../utils/timeline-editing";
 
 interface ThuocTinhDongThoiGian {

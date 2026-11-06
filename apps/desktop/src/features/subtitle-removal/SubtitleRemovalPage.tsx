@@ -5,7 +5,7 @@ import type {
   SubtitleRemovalPreview,
   SubtitleRemovalSettings,
   VideoProject
-} from "@vietdub/shared";
+} from "@vietvoice/shared";
 import { previewSubtitleRemoval } from "../../services/api";
 import { SubtitleRegionSelector } from "./SubtitleRegionSelector";
 
@@ -31,9 +31,9 @@ export function SubtitleRemovalPage({
   onRegionChanged,
   onMessageChanged
 }: SubtitleRemovalPageProps) {
-  const [timestampMs, setTimestampMs] = useState(() => Number(localStorage.getItem(`vietdub.removalTimestamp.${project.id}`)) || 0);
+  const [timestampMs, setTimestampMs] = useState(() => Number(localStorage.getItem(`vietvoice.removalTimestamp.${project.id}`)) || 0);
   const [settings, setSettings] = useState<SubtitleRemovalSettings>(() => {
-    const cauHinhDaLuu = localStorage.getItem(`vietdub.removalSettings.${project.id}`);
+    const cauHinhDaLuu = localStorage.getItem(`vietvoice.removalSettings.${project.id}`);
     if (!cauHinhDaLuu) return defaultSettings;
     try {
       return { ...defaultSettings, ...JSON.parse(cauHinhDaLuu) as SubtitleRemovalSettings };
@@ -47,8 +47,8 @@ export function SubtitleRemovalPage({
   const [comparisonPercent, setComparisonPercent] = useState(50);
 
   useEffect(() => {
-    localStorage.setItem(`vietdub.removalSettings.${project.id}`, JSON.stringify(settings));
-    localStorage.setItem(`vietdub.removalTimestamp.${project.id}`, String(timestampMs));
+    localStorage.setItem(`vietvoice.removalSettings.${project.id}`, JSON.stringify(settings));
+    localStorage.setItem(`vietvoice.removalTimestamp.${project.id}`, String(timestampMs));
   }, [project.id, settings, timestampMs]);
 
   async function onProcessCurrentFrameClicked(): Promise<void> {

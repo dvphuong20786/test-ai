@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from "react";
 import { Merge, Play, RotateCcw, Scissors, Search, Volume2 } from "lucide-react";
-import type { SubtitleSegment } from "@vietdub/shared";
+import type { SubtitleSegment } from "@vietvoice/shared";
 import { formatTime } from "../../utils/format-time";
 
 interface ThuocTinhBangPhuDe {
