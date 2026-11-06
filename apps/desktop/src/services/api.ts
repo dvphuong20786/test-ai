@@ -5,14 +5,14 @@ import type {
   SubtitleRemovalSettings,
   SubtitleSegment,
   VideoProject
-} from "@vietdub/shared";
-import type { ProcessingJob } from "@vietdub/shared";
+} from "@vietvoice/shared";
+import type { ProcessingJob } from "@vietvoice/shared";
 
 const apiUrl = "http://127.0.0.1:43111";
 
 function taoLoiKetNoi(loi: unknown): Error {
   const chiTiet = loi instanceof Error ? loi.message : String(loi);
-  return new Error(`Không kết nối được VietDub Server tại ${apiUrl}. Hãy kiểm tra cửa sổ terminal chạy server. Chi tiết: ${chiTiet}`);
+  return new Error(`Không kết nối được VietVoice Server tại ${apiUrl}. Hãy kiểm tra cửa sổ terminal chạy server. Chi tiết: ${chiTiet}`);
 }
 
 async function guiYeuCau(url: string, init?: RequestInit): Promise<Response> {

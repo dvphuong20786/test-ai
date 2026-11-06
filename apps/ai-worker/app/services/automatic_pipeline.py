@@ -81,11 +81,11 @@ def _dinh_dang_ass(thoi_gian_ms: int) -> str:
 
 
 def _tao_tep_phu_de(cac_doan: list[OcrSegment], tep_ass: Path) -> None:
-    dau_tep = """[Script Info]\nScriptType: v4.00+\nPlayResX: 960\nPlayResY: 540\n\n[V4+ Styles]\nFormat: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding\nStyle: VietDub,Arial,30,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,2,1,2,40,40,28,1\n\n[Events]\nFormat: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text\n"""
+    dau_tep = """[Script Info]\nScriptType: v4.00+\nPlayResX: 960\nPlayResY: 540\n\n[V4+ Styles]\nFormat: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding\nStyle: VietVoice,Arial,30,&H00FFFFFF,&H000000FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,2,1,2,40,40,28,1\n\n[Events]\nFormat: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text\n"""
     cac_dong = []
     for doan in cac_doan:
         noi_dung = doan.translatedText.replace("\n", "\\N").replace(",", "，")
-        cac_dong.append(f"Dialogue: 0,{_dinh_dang_ass(doan.startMs)},{_dinh_dang_ass(doan.endMs)},VietDub,,0,0,0,,{noi_dung}")
+        cac_dong.append(f"Dialogue: 0,{_dinh_dang_ass(doan.startMs)},{_dinh_dang_ass(doan.endMs)},VietVoice,,0,0,0,,{noi_dung}")
     tep_ass.write_text(dau_tep + "\n".join(cac_dong), encoding="utf-8-sig")
 
 
@@ -170,16 +170,16 @@ def process_automatic_pipeline(request: AutomaticPipelineRequest, bao_cao_giai_d
     if luu_ket_qua_trung_gian:
         luu_ket_qua_trung_gian("TRANSLATION", cac_doan)
 
-    thu_muc_dich = duong_dan_nguon.parent / "VietDub_Output"
+    thu_muc_dich = duong_dan_nguon.parent / "VietVoice_Output"
     thu_muc_dich.mkdir(parents=True, exist_ok=True)
-    tep_dich = thu_muc_dich / f"{duong_dan_nguon.stem}_vietdub.mp4"
+    tep_dich = thu_muc_dich / f"{duong_dan_nguon.stem}_vietvoice.mp4"
     vung_xoa_chu = NormalizedRegion(
         x=request.region.x,
         y=request.region.y,
         width=request.region.width,
         height=request.region.height,
     )
-    with tempfile.TemporaryDirectory(prefix="vietdub-") as thu_muc_tam_text:
+    with tempfile.TemporaryDirectory(prefix="vietvoice-") as thu_muc_tam_text:
         thu_muc_tam = Path(thu_muc_tam_text)
         tep_video_khong_chu = thu_muc_tam / "video-khong-chu.mp4"
         tep_ass = thu_muc_tam / "phu-de-viet.ass"

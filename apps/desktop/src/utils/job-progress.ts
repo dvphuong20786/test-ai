@@ -1,4 +1,4 @@
-import type { ProcessingJob } from "@vietdub/shared";
+import type { ProcessingJob } from "@vietvoice/shared";
 
 export function calculateJobProgressPercent(job: ProcessingJob): number | undefined {
   if (job.total <= 0) return undefined;

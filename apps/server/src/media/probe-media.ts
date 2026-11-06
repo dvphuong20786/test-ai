@@ -2,7 +2,7 @@ import { spawn } from "node:child_process";
 import { existsSync, readdirSync } from "node:fs";
 import { homedir } from "node:os";
 import path from "node:path";
-import type { MediaMetadata } from "@vietdub/shared";
+import type { MediaMetadata } from "@vietvoice/shared";
 
 interface ProbeStream {
   codec_type?: string;

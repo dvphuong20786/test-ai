@@ -1,4 +1,4 @@
-import type { SubtitleSegment } from "@vietdub/shared";
+import type { SubtitleSegment } from "@vietvoice/shared";
 
 export type CheDoKeoTimeline = "DI_CHUYEN" | "CAT_DAU" | "CAT_CUOI";
 
