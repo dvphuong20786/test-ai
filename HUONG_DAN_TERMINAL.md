@@ -152,13 +152,13 @@ pnpm db:generate
 pnpm db:push
 
 # Chỉ chạy backend
-pnpm --filter @vietdub/server dev
+pnpm --filter @vietvoice/server dev
 
 # Chỉ chạy AI Worker
 pnpm worker:dev
 
 # Chỉ chạy Electron/React
-pnpm --filter @vietdub/desktop dev
+pnpm --filter @vietvoice/desktop dev
 
 # Kiểm tra thay đổi Git
 git status --short

@@ -1,5 +1,5 @@
 {
-  "name": "@vietdub/desktop",
+  "name": "@vietvoice/desktop",
   "version": "0.3.0",
   "author": "phuongdv - PM Apps Tools - 0855550200",
   "private": true,
@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@vitejs/plugin-react": "5.1.1",
-    "@vietdub/shared": "workspace:*",
+    "@vietvoice/shared": "workspace:*",
     "lucide-react": "0.553.0",
     "react": "19.2.0",
     "react-dom": "19.2.0",

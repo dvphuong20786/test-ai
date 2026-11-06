@@ -1,18 +1,18 @@
 {
-  "name": "vietdub-ai-studio",
+  "name": "vietvoice-ai-studio",
   "version": "0.3.0",
   "author": "phuongdv - PM Apps Tools - 0855550200",
   "private": true,
   "packageManager": "pnpm@10.20.0",
   "scripts": {
-    "dev": "concurrently -k -n server,worker,desktop \"pnpm --filter @vietdub/server dev\" \"pnpm worker:dev\" \"pnpm --filter @vietdub/desktop dev\"",
+    "dev": "concurrently -k -n server,worker,desktop \"pnpm --filter @vietvoice/server dev\" \"pnpm worker:dev\" \"pnpm --filter @vietvoice/desktop dev\"",
     "worker:dev": ".venv\\Scripts\\python.exe -m uvicorn app.main:app --app-dir apps/ai-worker --host 127.0.0.1 --port 43112",
     "build": "pnpm -r --if-present build",
     "test": "pnpm -r --if-present test && set PYTHONPATH=apps/ai-worker&& .venv\\Scripts\\python.exe -m unittest discover -s apps/ai-worker/tests",
     "lint": "pnpm -r --if-present lint",
-    "db:generate": "pnpm --filter @vietdub/server prisma generate",
-    "db:push": "pnpm --filter @vietdub/server prisma db push",
-    "db:studio": "pnpm --filter @vietdub/server prisma studio"
+    "db:generate": "pnpm --filter @vietvoice/server prisma generate",
+    "db:push": "pnpm --filter @vietvoice/server prisma db push",
+    "db:studio": "pnpm --filter @vietvoice/server prisma studio"
   },
   "devDependencies": {
     "concurrently": "9.2.1"

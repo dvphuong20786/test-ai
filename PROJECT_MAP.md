@@ -1,4 +1,4 @@
-# PROJECT MAP — VietDub AI Studio
+# PROJECT MAP — VietVoice AI Studio
 
 > Bản đồ kỹ thuật toàn repository. Cập nhật file này khi thêm, xóa, đổi tên module, API, database model, script hoặc luồng xử lý chính.
 
@@ -59,7 +59,7 @@ video-ai/
 │   ├── desktop/
 │   │   ├── electron/
 │   │   │   ├── main.ts                     # Cửa sổ Electron, file picker, bảo mật renderer
-│   │   │   ├── preload.cts                 # CommonJS bridge `vietdubDesktop.selectVideo()` cho Electron sandbox
+│   │   │   ├── preload.cts                 # CommonJS bridge `vietvoiceDesktop.selectVideo()` cho Electron sandbox
 │   │   │   └── tsconfig.json
 │   │   ├── src/
 │   │   │   ├── features/subtitle-removal/

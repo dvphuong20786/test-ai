@@ -1,4 +1,4 @@
-# VietDub AI Studio
+# VietVoice AI Studio
 
 Ứng dụng desktop Windows hỗ trợ chuyển video có phụ đề tiếng Trung gắn cứng thành dự án lồng tiếng AI tiếng Việt.
 
@@ -101,4 +101,4 @@ pnpm --version
     Ở phiên bản hiện tại, bước 12 sẽ trả chuỗi 【CHẾ ĐỘ KIỂM THỬ OCR】你好，世界, không phải nội dung thật. Đây là điểm phải dừng khi đánh giá end-to-end.
 
 Có thể tiếp tục kiểm tra riêng bản xem trước xóa phụ đề: 13. Chọn timestamp có phụ đề. 14. Điều chỉnh ROI bao quanh phụ đề. 15. Chạy inpainting preview. 16. So sánh ảnh trước/sau. 17. Thử nhiều timestamp để kiểm tra mặt người hoặc vật thể phía sau có bị làm mờ quá mức hay không.
-Sau khi nhập video, bấm `Xử lý tự động & xuất MP4`. File kết quả được lưu trong thư mục `VietDub_Output` cạnh video nguồn; nút đổi thành `Mở video đã xuất` khi hoàn tất.
+Sau khi nhập video, bấm `Xử lý tự động & xuất MP4`. File kết quả được lưu trong thư mục `VietVoice_Output` cạnh video nguồn; nút đổi thành `Mở video đã xuất` khi hoàn tất.
