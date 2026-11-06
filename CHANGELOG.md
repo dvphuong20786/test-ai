@@ -1,4 +1,4 @@
-# CHANGELOG — VietDub AI Studio
+# CHANGELOG — VietVoice AI Studio
 
 Lịch sử thay đổi tuân theo Semantic Versioning.
 
