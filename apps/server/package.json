@@ -1,5 +1,5 @@
 {
-  "name": "@vietdub/server",
+  "name": "@vietvoice/server",
   "version": "0.3.0",
   "private": true,
   "type": "module",
@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@prisma/client": "6.18.0",
-    "@vietdub/shared": "workspace:*",
+    "@vietvoice/shared": "workspace:*",
     "cors": "2.8.5",
     "express": "5.1.0",
     "zod": "4.1.12"

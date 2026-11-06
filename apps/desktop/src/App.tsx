@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { FolderOpen, X } from "lucide-react";
-import type { OcrRegion, ProcessingJob, SubtitleSegment, VideoProject } from "@vietdub/shared";
+import type { OcrRegion, ProcessingJob, SubtitleSegment, VideoProject } from "@vietvoice/shared";
 import { cancelProcessingJob, checkDependencies, createAutomaticJob, getProjectSegments, importVideo, listProjectJobs, listProjects, observeProcessingJob, relinkProjectSource, runOcr, saveProjectSettings, saveSegment } from "./services/api";
 import { KhongGianBienTap } from "./features/editor/KhongGianBienTap";
 import { SubtitleRemovalPage } from "./features/subtitle-removal/SubtitleRemovalPage";
@@ -90,8 +90,8 @@ export default function App() {
   }
 
   async function lienKetLaiVideoNguon(duAnBiMatNguon: VideoProject): Promise<void> {
-    if (!window.vietdubDesktop) return;
-    const duongDanMoi = await window.vietdubDesktop.selectVideo();
+    if (!window.vietvoiceDesktop) return;
+    const duongDanMoi = await window.vietvoiceDesktop.selectVideo();
     if (!duongDanMoi) return;
     try {
       setDangXuLy(true);
@@ -108,8 +108,8 @@ export default function App() {
   }
 
   async function xuLyThayDoiChuaLuuTruocKhiDoiVideo(): Promise<boolean> {
-    if (!coThayDoiChuaLuu || !window.vietdubDesktop) return true;
-    const luaChon = await window.vietdubDesktop.confirmProjectReplacement();
+    if (!coThayDoiChuaLuu || !window.vietvoiceDesktop) return true;
+    const luaChon = await window.vietvoiceDesktop.confirmProjectReplacement();
     if (luaChon === "CANCEL") return false;
     if (luaChon === "SAVE") {
       setDangXuLy(true);
@@ -139,13 +139,13 @@ export default function App() {
   }
 
   async function khiBamNhapVideo(): Promise<void> {
-    if (!window.vietdubDesktop) {
-      setThongBao("Chức năng chọn video chỉ hoạt động trong ứng dụng Electron. Hãy chạy 03-chay-dev.cmd và chọn video trong cửa sổ VietDub AI Studio, không mở địa chỉ Vite bằng trình duyệt.");
+    if (!window.vietvoiceDesktop) {
+      setThongBao("Chức năng chọn video chỉ hoạt động trong ứng dụng Electron. Hãy chạy 03-chay-dev.cmd và chọn video trong cửa sổ VietVoice AI Studio, không mở địa chỉ Vite bằng trình duyệt.");
       return;
     }
     const coTheDoiVideo = await xuLyThayDoiChuaLuuTruocKhiDoiVideo();
     if (!coTheDoiVideo) return;
-    const duongDanNguon = await window.vietdubDesktop.selectVideo();
+    const duongDanNguon = await window.vietvoiceDesktop.selectVideo();
     if (duongDanNguon) await nhapVideoTuDuongDan(duongDanNguon);
   }
 
@@ -153,11 +153,11 @@ export default function App() {
     suKien.preventDefault();
     setDangKeoVideo(false);
     const tepVideo = suKien.dataTransfer.files[0];
-    if (!tepVideo || !window.vietdubDesktop) {
+    if (!tepVideo || !window.vietvoiceDesktop) {
       setThongBao("Không đọc được file vừa thả. Hãy dùng ứng dụng Electron và thử lại.");
       return;
     }
-    const duongDanNguon = window.vietdubDesktop.getDroppedFilePath(tepVideo);
+    const duongDanNguon = window.vietvoiceDesktop.getDroppedFilePath(tepVideo);
     const duoiTepHopLe = /\.(mp4|mkv|mov|webm)$/i.test(duongDanNguon);
     if (!duoiTepHopLe) {
       setThongBao("Chỉ hỗ trợ video MP4, MKV, MOV hoặc WebM.");
@@ -256,7 +256,7 @@ export default function App() {
   }
 
   if (!duAn) {
-    return <main className={`man-hinh-chao ${dangKeoVideo ? "dang-keo-video" : ""}`} onDragEnter={suKien => { suKien.preventDefault(); setDangKeoVideo(true); }} onDragOver={suKien => suKien.preventDefault()} onDragLeave={suKien => { if (suKien.currentTarget === suKien.target) setDangKeoVideo(false); }} onDrop={suKien => void khiThaVideo(suKien)}><section className="hop-nhap-video"><p className="nhan-san-pham">VIETDUB AI STUDIO</p><h1>Biên tập video Trung → Việt trong một workspace</h1><p>Nhập video để mở trình phát, bảng phụ đề và timeline đồng bộ.</p><button className="nut-chinh nut-nhap-video" onClick={() => void khiBamNhapVideo()} disabled={dangXuLy}><FolderOpen size={19} /> {dangXuLy ? "Đang nhập…" : "Mở video / Tạo dự án mới"}</button><p className="goi-y-keo-tha">hoặc kéo thả MP4, MKV, MOV, WebM vào đây</p><span>{thongBao}</span>{cacDuAnGanDay.length > 0 && <div className="du-an-gan-day"><strong>Dự án gần đây</strong>{cacDuAnGanDay.slice(0, 5).map(duAnGanDay => <button className={duAnGanDay.sourceAvailable === false ? "thieu-video-nguon" : ""} key={duAnGanDay.id} onClick={() => void moDuAnGanDay(duAnGanDay)}>{duAnGanDay.sourceAvailable === false ? "Thiếu nguồn · Liên kết lại · " : ""}{duAnGanDay.name}</button>)}</div>}<footer className="thong-tin-tac-gia">phuongdv · PM Apps Tools · 0855550200</footer></section></main>;
+    return <main className={`man-hinh-chao ${dangKeoVideo ? "dang-keo-video" : ""}`} onDragEnter={suKien => { suKien.preventDefault(); setDangKeoVideo(true); }} onDragOver={suKien => suKien.preventDefault()} onDragLeave={suKien => { if (suKien.currentTarget === suKien.target) setDangKeoVideo(false); }} onDrop={suKien => void khiThaVideo(suKien)}><section className="hop-nhap-video"><p className="nhan-san-pham">VIETVOICE AI STUDIO</p><h1>Biên tập video Trung → Việt trong một workspace</h1><p>Nhập video để mở trình phát, bảng phụ đề và timeline đồng bộ.</p><button className="nut-chinh nut-nhap-video" onClick={() => void khiBamNhapVideo()} disabled={dangXuLy}><FolderOpen size={19} /> {dangXuLy ? "Đang nhập…" : "Mở video / Tạo dự án mới"}</button><p className="goi-y-keo-tha">hoặc kéo thả MP4, MKV, MOV, WebM vào đây</p><span>{thongBao}</span>{cacDuAnGanDay.length > 0 && <div className="du-an-gan-day"><strong>Dự án gần đây</strong>{cacDuAnGanDay.slice(0, 5).map(duAnGanDay => <button className={duAnGanDay.sourceAvailable === false ? "thieu-video-nguon" : ""} key={duAnGanDay.id} onClick={() => void moDuAnGanDay(duAnGanDay)}>{duAnGanDay.sourceAvailable === false ? "Thiếu nguồn · Liên kết lại · " : ""}{duAnGanDay.name}</button>)}</div>}<footer className="thong-tin-tac-gia">phuongdv · PM Apps Tools · 0855550200</footer></section></main>;
   }
 
   return <><KhongGianBienTap duAn={duAn} cacDoanPhuDe={cacDoanPhuDe} vungOcr={vungOcr} dangXuLy={dangXuLy} thongBao={thongBao} congViecDangChay={congViecDangChay} duongDanVideoDaXuat={duongDanVideoDaXuat} trangThaiOcr={trangThaiOcr} khiChayTuDong={() => void chayTuDongToanBo()} khiHuyXuLy={() => void huyXuLyTuDong()} khiDoiVideo={() => void khiBamNhapVideo()} khiChayOcr={() => void chayOcr()} khiDoiVungOcr={setVungOcr} khiCapNhatCacDoan={setCacDoanPhuDe} khiLuuDoan={luuDoanPhuDe} khiKhoiPhucDoan={maDoan => void khoiPhucDoanDaLuu(maDoan)} khiMoCongCuXoaChu={() => setDangMoCongCuXoaChu(true)} khiDoiThongBao={setThongBao} khiDoiTrangThaiChuaLuu={setCoThayDoiChuaLuu} />{dangMoCongCuXoaChu && <div className="lop-phu-cong-cu"><button className="nut-dong-cong-cu" onClick={() => setDangMoCongCuXoaChu(false)}><X size={17} /> Đóng công cụ</button><SubtitleRemovalPage project={duAn} region={vungOcr} onRegionChanged={setVungOcr} onMessageChanged={setThongBao} /></div>}</>;

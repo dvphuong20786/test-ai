@@ -1,6 +1,6 @@
 const { contextBridge, ipcRenderer, webUtils } = require("electron") as typeof import("electron");
 
-contextBridge.exposeInMainWorld("vietdubDesktop", {
+contextBridge.exposeInMainWorld("vietvoiceDesktop", {
   selectVideo: (): Promise<string | null> => ipcRenderer.invoke("video:select"),
   confirmProjectReplacement: (): Promise<"SAVE" | "DISCARD" | "CANCEL"> => ipcRenderer.invoke("project:confirm-replace"),
   getDroppedFilePath: (file: File): string => webUtils.getPathForFile(file),
