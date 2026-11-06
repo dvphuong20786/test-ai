@@ -1,0 +1,17 @@
+.khung-dong-thoi-gian {
+  position: relative;
+  padding-bottom: 20px;
+}
+
+.khung-dong-thoi-gian canvas {
+  touch-action: none;
+}
+
+.goi-y-timeline {
+  position: sticky;
+  left: 8px;
+  bottom: 2px;
+  color: #748095;
+  font-size: 10px;
+  pointer-events: none;
+}

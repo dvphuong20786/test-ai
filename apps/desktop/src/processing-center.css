@@ -1,0 +1,75 @@
+.noi-dung-trung-tam-xu-ly {
+  align-items: start;
+}
+
+.nhat-ky-cong-viec {
+  width: 100%;
+}
+
+.nhat-ky-cong-viec pre {
+  max-height: 160px;
+  margin: 8px 0 0;
+  padding: 10px;
+  overflow: auto;
+  color: #aab4c4;
+  background: #080b11;
+  border: 1px solid #283041;
+  font: 11px/1.5 Consolas, monospace;
+  white-space: pre-wrap;
+}
+
+.lop-phu-xac-nhan {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: #05070bd9;
+}
+
+.hop-xac-nhan-pipeline {
+  width: min(620px, 92vw);
+  padding: 24px;
+  border: 1px solid #3a4357;
+  background: #121722;
+  box-shadow: 0 20px 70px #000a;
+}
+
+.hop-xac-nhan-pipeline h2 {
+  margin: 0 0 18px;
+  font-size: 20px;
+}
+
+.hop-xac-nhan-pipeline dl {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 9px 12px;
+}
+
+.hop-xac-nhan-pipeline dt {
+  color: #8190a5;
+}
+
+.hop-xac-nhan-pipeline dd {
+  margin: 0;
+  color: #dbe2ed;
+}
+
+.hop-xac-nhan-pipeline p {
+  color: #9ba7b9;
+  font-size: 12px;
+}
+
+.hop-xac-nhan-pipeline > div {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.hop-xac-nhan-pipeline .nut-chinh {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}

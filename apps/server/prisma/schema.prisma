@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id           String    @id
+  name         String
+  sourcePath   String
+  durationMs   Int
+  width        Int
+  height       Int
+  frameRate    Float
+  videoCodec   String
+  audioCodec   String?
+  ocrRegionJson String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  segments     Segment[]
+}
+
+model Segment {
+  id             String   @id
+  projectId      String
+  startMs        Int
+  endMs          Int
+  originalText   String
+  translatedText String   @default("")
+  ocrConfidence  Float?
+  status         String   @default("DETECTED")
+  selectedVoiceId String?
+  audioAssetId    String?
+  audioDurationMs Int?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  project        Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId, startMs])
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@vietdub/desktop",
+  "version": "0.3.0",
+  "author": "phuongdv - PM Apps Tools - 0855550200",
+  "private": true,
+  "type": "module",
+  "main": "dist-electron/main.js",
+  "scripts": {
+    "dev": "concurrently -k \"vite\" \"wait-on http://localhost:5173 && tsc -p electron/tsconfig.json && electron .\"",
+    "build": "tsc -b && vite build && tsc -p electron/tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "5.1.1",
+    "@vietdub/shared": "workspace:*",
+    "lucide-react": "0.553.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "zustand": "5.0.8"
+  },
+  "devDependencies": {
+    "@types/node": "24.10.0",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "concurrently": "9.2.1",
+    "electron": "39.2.3",
+    "typescript": "5.9.3",
+    "vite": "7.2.2",
+    "vitest": "4.0.8",
+    "wait-on": "9.0.3"
+  }
+}

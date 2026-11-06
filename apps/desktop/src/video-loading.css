@@ -1,0 +1,34 @@
+.dang-tai-video {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 10px;
+  color: #b9c3d2;
+  background: #030405cc;
+  font-size: 12px;
+}
+
+.vong-xoay {
+  width: 28px;
+  height: 28px;
+  border: 3px solid #394257;
+  border-top-color: #7b70db;
+  border-radius: 50%;
+  animation: xoay-tai-video .8s linear infinite;
+}
+
+.metadata-xem-truoc {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  padding: 4px 7px;
+  color: #aab5c6;
+  background: #000b;
+  font-size: 10px;
+}
+
+@keyframes xoay-tai-video {
+  to { transform: rotate(360deg); }
+}

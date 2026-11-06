@@ -1,0 +1,28 @@
+.man-hinh-loi-giao-dien {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: #090b12;
+}
+
+.man-hinh-loi-giao-dien section {
+  width: min(560px, 90vw);
+  display: grid;
+  gap: 16px;
+  padding: 30px;
+  border: 1px solid #713f4b;
+  background: #151119;
+}
+
+.man-hinh-loi-giao-dien strong {
+  color: #ffb4b4;
+  font-size: 20px;
+}
+
+.man-hinh-loi-giao-dien code {
+  padding: 10px;
+  color: #c9b8c1;
+  background: #090b12;
+  overflow-wrap: anywhere;
+}

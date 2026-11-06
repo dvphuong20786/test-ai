@@ -1,0 +1,37 @@
+.nhom-thao-tac button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nhom-thao-tac button span {
+  font-size: 11px;
+}
+
+.trang-thai-luu.chua-luu {
+  color: #f0b35f;
+}
+
+.du-an-gan-day button.thieu-video-nguon {
+  border-color: #8a5b2d;
+  color: #f0b35f;
+}
+
+.chi-tiet-video dl {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 6px 8px;
+  margin: 10px 0 0;
+  font-size: 11px;
+}
+
+.chi-tiet-video dt {
+  color: #788599;
+}
+
+.chi-tiet-video dd {
+  min-width: 0;
+  margin: 0;
+  color: #bdc6d5;
+  overflow-wrap: anywhere;
+}

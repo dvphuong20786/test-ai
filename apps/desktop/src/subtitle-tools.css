@@ -1,0 +1,43 @@
+.bang-phu-de {
+  grid-template-rows: 42px 34px 34px 29px 1fr;
+}
+
+.thanh-loc-phu-de,
+.thanh-sua-doan {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border-bottom: 1px solid #293143;
+  overflow-x: auto;
+}
+
+.thanh-loc-phu-de {
+  justify-content: space-between;
+}
+
+.thanh-loc-phu-de label {
+  display: flex;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.thanh-loc-phu-de input {
+  margin: 0;
+}
+
+.thanh-loc-phu-de select {
+  padding: 3px 5px;
+  font-size: 11px;
+}
+
+.thanh-sua-doan button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px;
+  font-size: 10px;
+  white-space: nowrap;
+}

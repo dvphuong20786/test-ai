@@ -1,0 +1,32 @@
+/* Thanh tua chiếm phần trống để đồng hồ và trạng thái phát vẫn đọc được ở cửa sổ hẹp. */
+.dieu-khien-phat {
+  padding: 0 10px;
+}
+
+.thanh-tua-video {
+  flex: 1;
+  max-width: 360px;
+  padding: 0;
+  accent-color: #7968ee;
+}
+
+.ma-thoi-gian {
+  margin-left: 0;
+  white-space: nowrap;
+}
+
+.trang-thai-video {
+  min-width: 92px;
+  color: #8f9bad;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.trang-thai-video.dang_phat,
+.trang-thai-video.san_sang {
+  color: #70cfa5;
+}
+
+.trang-thai-video.loi {
+  color: #ff8c8c;
+}
