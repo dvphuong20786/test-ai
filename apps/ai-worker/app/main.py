@@ -10,7 +10,7 @@ from app.services.ocr_service import detect_subtitles
 from app.subtitle_removal.models import RemovalPreviewRequest, RemovalPreviewResponse
 from app.subtitle_removal.restoration_pipeline import RestorationPipeline
 
-app = FastAPI(title="VietDub AI Worker", version="0.3.0")
+app = FastAPI(title="VietVoice AI Worker", version="0.3.0")
 
 
 @app.get("/health")

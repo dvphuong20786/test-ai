@@ -3,7 +3,7 @@ setlocal
 cd /d "%~dp0"
 
 echo ============================================================
-echo CAI DAT MOI TRUONG VIETDUB AI STUDIO
+echo CAI DAT MOI TRUONG VIETVOICE AI STUDIO
 echo ============================================================
 call "%~dp001-kiem-tra-moi-truong.cmd" || exit /b 1
 

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Download, FolderOpen, Redo2, Save, Undo2, WandSparkles } from "lucide-react";
-import type { OcrRegion, ProcessingJob, SubtitleSegment, VideoProject } from "@vietdub/shared";
+import type { OcrRegion, ProcessingJob, SubtitleSegment, VideoProject } from "@vietvoice/shared";
 import { BangPhuDe } from "./BangPhuDe";
 import { DongThoiGian } from "./DongThoiGian";
 import { TrinhPhatVideo } from "./TrinhPhatVideo";
@@ -56,7 +56,7 @@ const NHAN_GIAI_DOAN: Record<string, string> = {
 
 export function KhongGianBienTap({ duAn, cacDoanPhuDe, vungOcr, dangXuLy, thongBao, congViecDangChay, duongDanVideoDaXuat, khiChayTuDong, khiHuyXuLy, khiDoiVideo, khiChayOcr, khiDoiVungOcr, khiCapNhatCacDoan, khiLuuDoan, khiKhoiPhucDoan, khiMoCongCuXoaChu, khiDoiThongBao, khiDoiTrangThaiChuaLuu, trangThaiOcr }: ThuocTinhKhongGianBienTap) {
   const [cheDo, setCheDo] = useState<CheDoBienTap>("ocr");
-  const [maDoanDangChon, setMaDoanDangChon] = useState<string | undefined>(() => localStorage.getItem(`vietdub.selectedSegment.${duAn.id}`) || undefined);
+  const [maDoanDangChon, setMaDoanDangChon] = useState<string | undefined>(() => localStorage.getItem(`vietvoice.selectedSegment.${duAn.id}`) || undefined);
   const [thoiGianHienTaiMs, setThoiGianHienTaiMs] = useState(0);
   const [dangPhat, setDangPhat] = useState(false);
   const [mucThuPhong, setMucThuPhong] = useState(1);
@@ -65,8 +65,8 @@ export function KhongGianBienTap({ duAn, cacDoanPhuDe, vungOcr, dangXuLy, thongB
   const [lichSuTien, setLichSuTien] = useState<SubtitleSegment[][]>([]);
   const [dangLuu, setDangLuu] = useState(false);
   const [coThayDoiChuaLuu, setCoThayDoiChuaLuu] = useState(false);
-  const [chieuRongBangCongCu, setChieuRongBangCongCu] = useState(() => Number(localStorage.getItem("vietdub.toolWidth")) || 235);
-  const [chieuRongBangPhuDe, setChieuRongBangPhuDe] = useState(() => Number(localStorage.getItem("vietdub.subtitleWidth")) || 480);
+  const [chieuRongBangCongCu, setChieuRongBangCongCu] = useState(() => Number(localStorage.getItem("vietvoice.toolWidth")) || 235);
+  const [chieuRongBangPhuDe, setChieuRongBangPhuDe] = useState(() => Number(localStorage.getItem("vietvoice.subtitleWidth")) || 480);
   const [hienXacNhanPipeline, setHienXacNhanPipeline] = useState(false);
   const [thoiGianHienTai, setThoiGianHienTai] = useState(Date.now());
   const [anTrungTamXuLy, setAnTrungTamXuLy] = useState(false);
@@ -84,7 +84,7 @@ export function KhongGianBienTap({ duAn, cacDoanPhuDe, vungOcr, dangXuLy, thongB
     dich: { tieuDe: "Dịch phụ đề sang tiếng Việt", noiDung: "Nút xử lý tự động dùng Argos local; bạn vẫn có thể sửa bản dịch trong bảng bên phải." },
     giong: { tieuDe: "Tạo giọng đọc tiếng Việt", noiDung: "Nút xử lý tự động dùng giọng Việt Piper local và đặt âm thanh theo timestamp OCR." },
     "kiem-tra": { tieuDe: "Rà soát kết quả", noiDung: "Kiểm tra thời gian, chữ Trung và bản dịch của từng dòng trong bảng phụ đề." },
-    xuat: { tieuDe: "Xuất video hoàn chỉnh", noiDung: "Bấm nút xử lý tự động phía trên; FFmpeg sẽ tạo MP4 trong thư mục VietDub_Output cạnh video nguồn." }
+    xuat: { tieuDe: "Xuất video hoàn chỉnh", noiDung: "Bấm nút xử lý tự động phía trên; FFmpeg sẽ tạo MP4 trong thư mục VietVoice_Output cạnh video nguồn." }
   };
   const huongDanDangChon = noiDungHuongDanTheoCheDo[cheDo];
   const soBuocDangChon = CAC_CHE_DO.findIndex(muc => muc.ma === cheDo) + 1;
@@ -109,7 +109,7 @@ export function KhongGianBienTap({ duAn, cacDoanPhuDe, vungOcr, dangXuLy, thongB
 
   function chonDoanPhuDe(doanPhuDe: SubtitleSegment): void {
     setMaDoanDangChon(doanPhuDe.id);
-    localStorage.setItem(`vietdub.selectedSegment.${duAn.id}`, doanPhuDe.id);
+    localStorage.setItem(`vietvoice.selectedSegment.${duAn.id}`, doanPhuDe.id);
     setThoiGianHienTaiMs(doanPhuDe.startMs);
     if (thamChieuVideo.current) thamChieuVideo.current.currentTime = doanPhuDe.startMs / 1000;
   }
@@ -171,12 +171,12 @@ export function KhongGianBienTap({ duAn, cacDoanPhuDe, vungOcr, dangXuLy, thongB
       if (loaiBang === "cong-cu") {
         const chieuRongMoi = Math.max(180, Math.min(380, suKien.clientX - khungBoCuc.left));
         setChieuRongBangCongCu(chieuRongMoi);
-        localStorage.setItem("vietdub.toolWidth", String(chieuRongMoi));
+        localStorage.setItem("vietvoice.toolWidth", String(chieuRongMoi));
         return;
       }
       const chieuRongMoi = Math.max(340, Math.min(720, khungBoCuc.right - suKien.clientX));
       setChieuRongBangPhuDe(chieuRongMoi);
-      localStorage.setItem("vietdub.subtitleWidth", String(chieuRongMoi));
+      localStorage.setItem("vietvoice.subtitleWidth", String(chieuRongMoi));
     }
     function khiTha(): void {
       window.removeEventListener("pointermove", khiKeo);
@@ -284,7 +284,7 @@ export function KhongGianBienTap({ duAn, cacDoanPhuDe, vungOcr, dangXuLy, thongB
         <div className="nhom-thao-tac"><button title="Mở video khác (Ctrl+O)" onClick={khiDoiVideo}><FolderOpen size={16} /><span>Mở video khác</span></button><button title="Lưu (Ctrl+S)" onClick={() => void luuDoanDangChon()}><Save size={16} /></button><button title="Hoàn tác (Ctrl+Z)" onClick={luiThaoTac}><Undo2 size={16} /></button><button title="Làm lại (Ctrl+Y)" onClick={tienThaoTac}><Redo2 size={16} /></button></div>
         <div className="thong-bao-cong-viec">{thongBao}{congViecDangChay?.total ? <progress value={congViecDangChay.processed} max={congViecDangChay.total} /> : null}</div>
         {congViecDangChay?.status === "RUNNING" && <button className="nut-huy-xu-ly" onClick={khiHuyXuLy}>Hủy xử lý</button>}
-        {duongDanVideoDaXuat ? <button className="nut-xuat-video" onClick={() => void window.vietdubDesktop?.showOutputFile(duongDanVideoDaXuat)}><Download size={16} /> Mở video đã xuất</button> : <button className="nut-tu-dong" disabled={dangXuLy} onClick={() => setHienXacNhanPipeline(true)}><WandSparkles size={16} /> {dangXuLy ? tenGiaiDoanDangChay || "Đang xử lý…" : "Xử lý toàn bộ & xuất MP4"}</button>}
+        {duongDanVideoDaXuat ? <button className="nut-xuat-video" onClick={() => void window.vietvoiceDesktop?.showOutputFile(duongDanVideoDaXuat)}><Download size={16} /> Mở video đã xuất</button> : <button className="nut-tu-dong" disabled={dangXuLy} onClick={() => setHienXacNhanPipeline(true)}><WandSparkles size={16} /> {dangXuLy ? tenGiaiDoanDangChay || "Đang xử lý…" : "Xử lý toàn bộ & xuất MP4"}</button>}
       </header>
       {congViecDangChay && !anTrungTamXuLy ? <details className="trung-tam-xu-ly" open={congViecDangChay.status === "RUNNING"}>
         <summary>Trung tâm xử lý · {tenGiaiDoanDangChay} · {congViecDangChay.status}</summary>
@@ -299,7 +299,7 @@ export function KhongGianBienTap({ duAn, cacDoanPhuDe, vungOcr, dangXuLy, thongB
           {cheDo === "dich" && <><h3>Dịch thuật</h3><p className="chu-phu">Argos dịch offline Trung → Anh → Việt. Có thể sửa từng dòng ở bảng bên phải sau khi chạy.</p></>}
           {cheDo === "giong" && <><h3>Giọng AI</h3><p className="chu-phu">Piper dùng model `vi_VN-vais1000-medium` trên máy, không gửi nội dung ra ngoài.</p></>}
           {cheDo === "kiem-tra" && <><h3>Trung tâm lỗi</h3><button onClick={() => khiDoiThongBao("Đang hiển thị các đoạn OCR có độ tin cậy thấp.")}>OCR dưới 70%</button><button onClick={() => khiDoiThongBao("Đang hiển thị các đoạn chưa có bản dịch.")}>Thiếu bản dịch</button></>}
-          {cheDo === "xuat" && <><h3>Xuất video</h3><p className="chu-phu">Nút tự động tạo MP4 H.264/AAC trong thư mục `VietDub_Output` cạnh video nguồn.</p></>}
+          {cheDo === "xuat" && <><h3>Xuất video</h3><p className="chu-phu">Nút tự động tạo MP4 H.264/AAC trong thư mục `VietVoice_Output` cạnh video nguồn.</p></>}
         </aside>
         {!anBangCongCu && <div className="tay-keo-cot tay-keo-cong-cu" onPointerDown={suKien => batDauDoiKichThuocBang("cong-cu", suKien)} />}
         {anBangCongCu && <button className="nut-mo-cong-cu" onClick={() => setAnBangCongCu(false)}><ChevronRight size={16} /></button>}

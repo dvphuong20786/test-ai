@@ -548,5 +548,5 @@ app.use((error: unknown, request: express.Request, response: express.Response, _
 });
 
 app.listen(port, "127.0.0.1", () => {
-  console.log(JSON.stringify({ level: "info", message: "VietDub Server đã sẵn sàng", port }));
+  console.log(JSON.stringify({ level: "info", message: "VietVoice Server đã sẵn sàng", port }));
 });

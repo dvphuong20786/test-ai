@@ -5,7 +5,7 @@ cd /d "%~dp0"
 :menu
 cls
 echo ============================================================
-echo              VIETDUB AI STUDIO - CONG CU DEV
+echo              VIETVOICE AI STUDIO - CONG CU DEV
 echo ============================================================
 echo [1] Buoc 01 - Kiem tra moi truong
 echo [2] Buoc 02 - Cai dat dependency va database
