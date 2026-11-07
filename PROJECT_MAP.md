@@ -190,7 +190,7 @@ Base URL development: `http://127.0.0.1:43112`.
 
 | Method | Route | Trạng thái |
 |---|---|---|
-| GET | `/health` | Hoạt động, báo OCR `test-mode` |
+| GET | `/health` | Hoạt động, báo OCR `paddleocr-v5-mobile` |
 | POST | `/api/ocr/detect` | PaddleOCR v5 mobile trên video thật |
 | POST | `/api/pipeline/automatic` | OCR, dịch local, inpaint, TTS, phụ đề và xuất MP4 |
 | POST | `/api/subtitle-removal/preview` | Chạy OpenCV thật cho một frame |
@@ -238,7 +238,7 @@ ROI trong React
 → POST /api/projects/:id/ocr
 → Node lưu ROI
 → FastAPI /api/ocr/detect
-→ OCR test-mode trả segment NEEDS_REVIEW
+→ PaddleOCR trên frame thật trả segment NEEDS_REVIEW khi độ tin cậy < 0.7
 → Prisma transaction thay danh sách segment
 → React hiển thị editor
 ```
@@ -320,19 +320,14 @@ Hoạt động trong mã nguồn:
 - Workspace 5 mode, bảng ảo hóa, timeline Canvas, playback đồng bộ và autosave.
 - OpenCV removal preview một frame.
 - Bộ terminal scripts có đánh số.
-
-Mô phỏng có nhãn:
-
-- OCR trả segment test-mode.
+- PaddleOCR v5 mobile trên frame thật, dịch Argos Trung–Anh–Việt, TTS Piper giọng Việt, xuất MP4 qua FFmpeg (nút "Xử lý tự động & xuất MP4").
 
 Chưa triển khai:
 
-- PaddleOCR video thật và bounding boxes xuyên segment.
-- Dịch Trung–Việt/provider/cache/glossary.
-- TTS, alignment, timeline và audio mixing.
-- Kéo/trim clip timeline, waveform thật, cấu hình phím tắt và persistence kích thước panel.
-- Xử lý removal theo interval/toàn video.
-- ASS/SRT rendering và final MP4 export.
+- Bounding boxes xuyên segment.
+- Dịch provider/cache/glossary.
+- Căn chỉnh TTS nâng cao, waveform thật, kéo/trim clip timeline, cấu hình phím tắt và persistence kích thước panel.
+- Xử lý removal theo interval (hiện pipeline xóa toàn bộ video trong một lượt).
 - Windows installer hoàn chỉnh.
 
 ## 14. Quy tắc cập nhật map

@@ -17,7 +17,7 @@ export class ChanLoiGiaoDien extends Component<ThuocTinhChanLoiGiaoDien, TrangTh
 
   componentDidCatch(loi: Error, thongTinLoi: ErrorInfo): void {
     // Giữ chi tiết trong DevTools để lập trình viên lần đúng component gây lỗi.
-    console.error("VietDub gặp lỗi giao diện chưa được xử lý", loi, thongTinLoi.componentStack);
+    console.error("VietVoice gặp lỗi giao diện chưa được xử lý", loi, thongTinLoi.componentStack);
   }
 
   private taiLaiUngDung = (): void => {

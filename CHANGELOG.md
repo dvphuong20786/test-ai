@@ -2,6 +2,17 @@
 
 Lịch sử thay đổi tuân theo Semantic Versioning.
 
+## [Unreleased] - 2026-11-06
+- **Sửa lỗi chuỗi xuất video một nút**: import video không còn phụ thuộc AI Worker đang chạy (server dùng ffprobe trong PATH khi Worker lỗi); đường dẫn ffprobe từ Worker không còn ép `.exe` ngoài Windows.
+- **Sửa lỗi build**: hai file test còn import `@vietdub/shared` đã đổi sang `@vietvoice/shared`; `pnpm-lock.yaml` đã tạo lại bằng `pnpm install` (chỉ còn `@vietvoice/shared`); `.env.example` dùng `vietvoice.db`; `.gitignore` dùng `VietVoice_Output/` và bỏ qua `dist-electron/`.
+- **Kiểm tra trước khi chạy pipeline**: AI Worker kiểm tra FFmpeg, gói dịch Argos Trung–Anh–Việt và model giọng Việt Piper trước OCR, báo thiếu rõ ràng thay vì crash giữa chừng; engine AI inpainting chưa cài model sẽ dùng OpenCV thay vì raise lỗi.
+- **Ổn định theo dõi job**: client xử lý mất kết nối SSE (trước đây nút xử lý quay mãi); server đóng luồng SSE sau khi báo lỗi thay vì gửi event lỗi lặp lại.
+- **Tương thích đa nền tảng**: script `test` và `worker:dev` dùng `scripts/chay-python.mjs` để tìm python của `.venv` trên cả Windows và Linux/macOS thay vì hardcode `.venv\Scripts\python.exe`.
+- **Tài liệu**: README bỏ đường dẫn máy cá nhân và ghi chú OCR kiểm thử đã lỗi thời, thêm hướng dẫn tải model giọng Việt Piper và cài gói dịch Argos; PROJECT_MAP sửa các mục còn ghi OCR `test-mode`.
+- **Sửa lệnh cài gói dịch**: `argospm install` chỉ nhận một gói mỗi lần — README, `02-cai-dat.cmd`, `HUONG_DAN_TERMINAL.md` và thông báo lỗi của pipeline trước đây ghi hai gói trong một lệnh (sẽ lỗi `unrecognized arguments`); nay tách thành hai lệnh riêng.
+- **Đã kiểm chứng end-to-end trên Linux**: pipeline tự động với video thật `data/e2e-real-clip.mp4` chạy đủ 6 bước (OCR PaddleOCR v5, dịch Argos, inpaint OpenCV, TTS Piper, phụ đề ASS, xuất MP4) và xuất được `VietVoice_Output/e2e-real-clip_vietvoice.mp4` (h264 + aac, ~12 giây, 9 segment).
+- **Lưu ý**: `apps/desktop/dist-electron/` là artifact build (đã build lại đúng tên VietVoice); cần `git rm --cached` để ngừng theo dõi 2 file này trong git.
+
 ## [v0.5.0] - 2026-11-03
 - **Yêu cầu**: Tiếp tục task dài, sửa video xem trước bị đen và lỗi `fetch failed` khi chạy xử lý tự động.
 - **Chi tiết kỹ thuật**:

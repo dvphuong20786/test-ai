@@ -177,6 +177,12 @@ export function observeProcessingJob(jobId: string, khiCoTienDo: (job: Processin
       const data = JSON.parse((event as MessageEvent).data) as { message?: string };
       reject(new Error(data.message || "Mất kết nối khi theo dõi tiến độ."));
     });
+    // EventSource không tự reject khi mất kết nối SSE; nếu không có onerror
+    // thì nút xử lý sẽ quay mãi mà không bao giờ báo xong hay báo lỗi.
+    eventSource.onerror = () => {
+      eventSource.close();
+      reject(new Error("Mất kết nối khi theo dõi tiến độ. Hãy kiểm tra VietVoice Server và AI Worker rồi thử lại."));
+    };
   });
 }
 

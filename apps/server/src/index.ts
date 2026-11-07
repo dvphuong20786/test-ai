@@ -20,10 +20,19 @@ const workspaceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)),
 async function resolveFfprobePath(): Promise<string> {
   const localPath = findFfprobePath();
   if (localPath !== "ffprobe") return localPath;
-  const workerResponse = await fetch(`${workerUrl}/api/dependencies`);
-  if (!workerResponse.ok) return localPath;
-  const workerDependencies = await workerResponse.json() as { ffprobePath?: string };
-  return workerDependencies.ffprobePath || localPath;
+  // ffprobe đã có trong PATH thì dùng luôn; chỉ hỏi AI Worker để tìm đường
+  // dẫn WinGet khi cần, và Worker lỗi thì không được chặn import video.
+  try {
+    const workerResponse = await fetch(`${workerUrl}/api/dependencies`);
+    if (!workerResponse.ok) return localPath;
+    const workerDependencies = await workerResponse.json() as { ffprobePath?: string };
+    const workerPath = workerDependencies.ffprobePath;
+    // Bỏ qua đường dẫn .exe khi chạy ngoài Windows (worker cũ trả ffprobe.exe).
+    if (!workerPath || (process.platform !== "win32" && workerPath.endsWith(".exe"))) return localPath;
+    return workerPath;
+  } catch {
+    return localPath;
+  }
 }
 
 interface JobWorkerResponse {
@@ -419,7 +428,11 @@ app.get("/api/jobs/:jobId/events", (request, response) => {
         response.end();
       }
     } catch (error) {
+      // AI Worker mất kết nối thì báo lỗi một lần rồi đóng luồng, tránh
+      // gửi event job-error lặp lại mỗi 700ms trong khi client đã từ chối.
+      clearInterval(boHenGuiTienDo);
       response.write(`event: job-error\ndata: ${JSON.stringify({ message: error instanceof Error ? error.message : "Mất kết nối AI Worker" })}\n\n`);
+      response.end();
     }
   };
   const boHenGuiTienDo = setInterval(() => void guiTienDo(), 700);

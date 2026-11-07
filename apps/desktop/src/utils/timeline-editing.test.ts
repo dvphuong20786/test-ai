@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { SubtitleSegment } from "@vietdub/shared";
+import type { SubtitleSegment } from "@vietvoice/shared";
 import { batDinhMocThoiGian, tinhDoanSauKhiKeo } from "./timeline-editing";
 
 const doanMau: SubtitleSegment = {

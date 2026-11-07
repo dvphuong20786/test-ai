@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { ProcessingJob } from "@vietdub/shared";
+import type { ProcessingJob } from "@vietvoice/shared";
 import { calculateJobProgressPercent } from "./job-progress";
 
 function createJob(processed: number, total: number): ProcessingJob {

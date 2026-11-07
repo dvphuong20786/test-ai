@@ -6,7 +6,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 # Argos cần thư mục cấu hình có quyền ghi khi module pipeline được import trong sandbox kiểm thử.
-os.environ["XDG_CONFIG_HOME"] = str(Path(tempfile.gettempdir()) / "vietdub-test-config")
+os.environ["XDG_CONFIG_HOME"] = str(Path(tempfile.gettempdir()) / "vietvoice-test-config")
 
 from app.models.ocr import OcrRegion
 from app.models.pipeline import AutomaticPipelineRequest, AutomaticPipelineResponse

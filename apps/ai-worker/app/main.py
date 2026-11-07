@@ -32,7 +32,10 @@ def dependencies() -> dict:
     language_codes = {language.code for language in translate.get_installed_languages()}
     if not {"zh", "en", "vi"}.issubset(language_codes):
         missing.append("Gói dịch Argos Trung-Anh-Việt")
-    ffprobe_path = str(Path(ffmpeg_path).with_name("ffprobe.exe")) if ffmpeg_path else None
+    # ffprobe nằm cùng thư mục với ffmpeg và dùng cùng hậu tố hệ điều hành
+    # (ffprobe.exe trên Windows, ffprobe trên Linux/macOS).
+    ffmpeg_suffix = Path(ffmpeg_path).suffix
+    ffprobe_path = str(Path(ffmpeg_path).with_name(f"ffprobe{ffmpeg_suffix}")) if ffmpeg_path else None
     return {"ready": not missing, "missing": missing, "ffprobePath": ffprobe_path}
 
 

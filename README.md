@@ -44,6 +44,25 @@ pip install -r apps/ai-worker/requirements.txt
 pnpm dev
 ```
 
+## Tải model giọng Việt Piper (bắt buộc trước khi xuất video)
+
+Model giọng Việt không có sẵn trong repo (file `.onnx` ~60MB, đã loại khỏi git). Tải 2 file vào thư mục `models/piper/`:
+
+```powershell
+python scripts/download-piper-voice.py
+```
+
+Script tải từ `rhasspy/piper-voices` trên Hugging Face:
+`vi/vi_VN/vais1000/medium/vi_VN-vais1000-medium.onnx` và `.onnx.json`.
+Nếu không có model này, nút xử lý sẽ báo thiếu ngay từ đầu thay vì crash giữa chừng.
+
+Cài gói dịch Argos Trung–Anh–Việt (chạy trong `.venv`):
+
+```powershell
+argospm install translate-zh_en
+argospm install translate-en_vi
+```
+
 ## Kiểm tra
 
 ```powershell
@@ -53,31 +72,23 @@ pnpm test
 
 ## Giới hạn đã biết
 
-- OCR thật, xử lý xóa phụ đề theo interval/toàn video, dịch thuật, TTS, timeline audio, ASS, xuất MP4 và Windows installer thuộc các phase tiếp theo.
+- Xử lý xóa phụ đề theo interval/toàn video theo chunk, glossary/cache dịch, căn chỉnh TTS nâng cao, waveform thật + drag/trim + snapping, lịch sử job đầy đủ, first-run wizard và Windows installer hoàn chỉnh thuộc các phase tiếp theo.
 - Trình duyệt phát video phụ thuộc codec mà Chromium hỗ trợ; FFprobe vẫn đọc được nhiều codec hơn.
 - Không được dùng video không thuộc quyền sở hữu hoặc không có quyền chỉnh sửa/phân phối.
 
-# powershell
+## Thêm FFmpeg vào PATH (Windows)
 
-Set-Location 'F:\WORK\video-ai'
-.\01-kiem-tra-moi-truong.cmd
-.\02-cai-dat.cmd
-.\04-test.cmd
-.\05-build.cmd
-.\03-chay-dev.cmd
+Cài FFmpeg rồi thêm thư mục `bin` của FFmpeg vào biến môi trường `PATH`, sau đó đóng terminal cũ và mở terminal mới. Kiểm tra bằng lệnh:
 
-# powershell
-
-$env:Path = 'C:\Users\dvphu\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-9.0.2-full_build\bin;' + $env:Path
-.\03-chay-dev.cmd
-
-# powershell
-
+```powershell
 ffmpeg -version
 ffprobe -version
 node --version
 pnpm --version
 .\.venv\Scripts\python.exe --version
+```
+
+Không dùng đường dẫn tuyệt đối của một máy cụ thể trong tài liệu này; mọi lệnh trong repo đều chạy từ thư mục gốc của repository.
 
 # Các địa chỉ khi chạy:
 
@@ -97,8 +108,7 @@ pnpm --version
 9. Phát video và kiểm tra seek/timeline.
 10. Chọn vùng phụ đề phía dưới video.
 11. Chạy OCR.
-12. Kiểm tra kết quả.
-    Ở phiên bản hiện tại, bước 12 sẽ trả chuỗi 【CHẾ ĐỘ KIỂM THỬ OCR】你好，世界, không phải nội dung thật. Đây là điểm phải dừng khi đánh giá end-to-end.
+12. Kiểm tra kết quả: PaddleOCR chạy trên frame thật của video, trả về nội dung nhận dạng được trong vùng đã chọn. Nếu không nhận dạng được gì, kiểm tra lại vùng OCR và chất lượng phụ đề trong video.
 
 Có thể tiếp tục kiểm tra riêng bản xem trước xóa phụ đề: 13. Chọn timestamp có phụ đề. 14. Điều chỉnh ROI bao quanh phụ đề. 15. Chạy inpainting preview. 16. So sánh ảnh trước/sau. 17. Thử nhiều timestamp để kiểm tra mặt người hoặc vật thể phía sau có bị làm mờ quá mức hay không.
 Sau khi nhập video, bấm `Xử lý tự động & xuất MP4`. File kết quả được lưu trong thư mục `VietVoice_Output` cạnh video nguồn; nút đổi thành `Mở video đã xuất` khi hoàn tất.

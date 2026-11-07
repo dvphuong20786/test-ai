@@ -6,9 +6,9 @@
   "packageManager": "pnpm@10.20.0",
   "scripts": {
     "dev": "concurrently -k -n server,worker,desktop \"pnpm --filter @vietvoice/server dev\" \"pnpm worker:dev\" \"pnpm --filter @vietvoice/desktop dev\"",
-    "worker:dev": ".venv\\Scripts\\python.exe -m uvicorn app.main:app --app-dir apps/ai-worker --host 127.0.0.1 --port 43112",
+    "worker:dev": "node scripts/chay-python.mjs -m uvicorn app.main:app --app-dir apps/ai-worker --host 127.0.0.1 --port 43112",
     "build": "pnpm -r --if-present build",
-    "test": "pnpm -r --if-present test && set PYTHONPATH=apps/ai-worker&& .venv\\Scripts\\python.exe -m unittest discover -s apps/ai-worker/tests",
+    "test": "pnpm -r --if-present test && node scripts/chay-python.mjs -m unittest discover -s apps/ai-worker/tests",
     "lint": "pnpm -r --if-present lint",
     "db:generate": "pnpm --filter @vietvoice/server prisma generate",
     "db:push": "pnpm --filter @vietvoice/server prisma db push",

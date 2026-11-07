@@ -20,5 +20,6 @@ apps/server/prisma/*.db-journal
 apps/ai-worker/.paddleocr/
 models/piper/*.onnx
 models/piper/*.json
-VietDub_Output/
+VietVoice_Output/
+dist-electron/
 

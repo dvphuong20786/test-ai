@@ -30,6 +30,49 @@ def _tim_ffmpeg() -> str:
     raise RuntimeError("Không tìm thấy FFmpeg. Hãy mở Terminal mới sau khi cài FFmpeg.")
 
 
+def _tim_ffprobe() -> str | None:
+    # ffprobe nằm cùng thư mục với ffmpeg và dùng cùng hậu tố hệ điều hành.
+    duong_dan_ffmpeg = _tim_ffmpeg()
+    ten_ffprobe = f"ffprobe{Path(duong_dan_ffmpeg).suffix}"
+    duong_dan_ffprobe = str(Path(duong_dan_ffmpeg).with_name(ten_ffprobe))
+    if Path(duong_dan_ffprobe).is_file():
+        return duong_dan_ffprobe
+    return shutil.which("ffprobe")
+
+
+def _nguon_co_am_thanh(duong_dan_nguon: Path) -> bool:
+    # Video không có luồng audio (ví dụ clip câm) thì bước gộp âm thanh phải
+    # bỏ qua track gốc, nếu không FFmpeg lỗi "matches no streams" giữa chừng.
+    duong_dan_ffprobe = _tim_ffprobe()
+    if not duong_dan_ffprobe:
+        return True
+    ket_qua = subprocess.run(
+        [duong_dan_ffprobe, "-v", "error", "-select_streams", "a", "-show_entries",
+         "stream=codec_type", "-of", "csv=p=0", str(duong_dan_nguon)],
+        capture_output=True, text=True, encoding="utf-8", errors="replace",
+    )
+    return "audio" in ket_qua.stdout
+
+
+def _kiem_tra_truoc_khi_chay() -> None:
+    # Kiểm tra nhanh mọi dependency nặng TRƯỚC khi OCR/inpainting chạy lâu,
+    # để thiếu cái gì thì báo rõ ngay từ đầu thay vì crash giữa pipeline.
+    _tim_ffmpeg()
+    cac_ngon_ngu_da_cai = {ngon_ngu.code for ngon_ngu in translate.get_installed_languages()}
+    if not {"zh", "en", "vi"} <= cac_ngon_ngu_da_cai:
+        raise RuntimeError(
+            "Chưa cài gói dịch Argos Trung-Anh-Việt. Hãy cài từng gói bằng hai lệnh: "
+            "argospm install translate-zh_en và argospm install translate-en_vi"
+        )
+    thu_muc_goc = Path(__file__).resolve().parents[4]
+    if not (thu_muc_goc / "models/piper/vi_VN-vais1000-medium.onnx").is_file():
+        raise RuntimeError(
+            "Chưa có model giọng Việt Piper vi_VN-vais1000-medium. "
+            "Hãy tải model vào thư mục models/piper/ theo README rồi chạy lại."
+        )
+    create_inpainting_engine("opencv-fast", RemovalSettings(method="TELEA", inpaintRadius=3, maskDilation=7, edgeFeathering=1))
+
+
 def _dich_sang_tieng_viet(noi_dung_trung: str) -> str:
     noi_dung_anh = translate.translate(noi_dung_trung, "zh", "en")
     return translate.translate(noi_dung_anh, "en", "vi")
@@ -97,6 +140,9 @@ def _xoa_phu_de_toan_video(duong_dan_nguon: Path, tep_video_khong_chu: Path, vun
     chieu_cao = int(video_vao.get(cv2.CAP_PROP_FRAME_HEIGHT))
     fps = max(video_vao.get(cv2.CAP_PROP_FPS), 1.0)
     video_ra = cv2.VideoWriter(str(tep_video_khong_chu), cv2.VideoWriter_fourcc(*"mp4v"), fps, (chieu_rong, chieu_cao))
+    if not video_ra.isOpened():
+        video_vao.release()
+        raise RuntimeError("OpenCV không mở được file video trung gian để ghi (codec mp4v không khả dụng)")
     # Mở rộng đủ để che cả viền đen bao quanh chữ trắng; bộ lọc hàng ngang ở
     # TextMaskGenerator giữ phần mở rộng này không lan lên khuôn mặt hoặc trang phục.
     cau_hinh = RemovalSettings(method="TELEA", inpaintRadius=3, maskDilation=7, edgeFeathering=1)
@@ -124,8 +170,11 @@ def _ghep_video(tep_video: Path, tep_nguon: Path, tep_ass: Path, cac_tep_giong: 
     for tep_giong in cac_tep_giong:
         lenh.extend(["-i", str(tep_giong)])
 
-    cac_bo_loc_am_thanh = ["[1:a]volume=0.16[am_goc]"]
-    cac_nhan_am_thanh = ["[am_goc]"]
+    # Video nguồn có thể không có luồng audio; lúc đó bỏ qua track gốc để
+    # FFmpeg không lỗi "matches no streams" mà chỉ trộn các giọng đọc.
+    co_am_thanh_goc = _nguon_co_am_thanh(tep_nguon)
+    cac_bo_loc_am_thanh = ["[1:a]volume=0.16[am_goc]"] if co_am_thanh_goc else []
+    cac_nhan_am_thanh = ["[am_goc]"] if co_am_thanh_goc else []
     for vi_tri, doan in enumerate(cac_doan):
         chi_so_dau_vao = vi_tri + 2
         nhan = f"giong{vi_tri}"
@@ -152,7 +201,7 @@ def process_automatic_pipeline(request: AutomaticPipelineRequest, bao_cao_giai_d
 
     if not duong_dan_nguon.is_file():
         raise RuntimeError(f"Không tìm thấy video nguồn: {duong_dan_nguon}")
-    _tim_ffmpeg()
+    _kiem_tra_truoc_khi_chay()
     bao_cao("PROBE", 1, 1)
 
     cac_doan = detect_subtitles(

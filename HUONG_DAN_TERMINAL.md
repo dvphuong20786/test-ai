@@ -62,6 +62,8 @@ Script thực hiện theo thứ tự:
 4. Cài dependency AI Worker từ `apps/ai-worker/requirements.txt`.
 5. Tạo `apps/server/.env` từ file mẫu nếu chưa có.
 6. Generate Prisma Client và đồng bộ schema SQLite.
+7. Tải model giọng Việt Piper vào `models/piper/` bằng `scripts/download-piper-voice.py`.
+8. Cài gói dịch Argos Trung–Anh–Việt (mỗi gói một lệnh riêng): `argospm install translate-zh_en`, rồi `argospm install translate-en_vi`.
 
 ## 5. Chạy môi trường development — bước 03
 
